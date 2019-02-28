@@ -1,0 +1,46 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "version" : "1.0",
+    "title" : "DAA Demo Application"
+  },
+  "host" : "daa-demo-application-daa-demo-project.apps.daaireland-e0bc.openshiftworkshop.com",
+  "basePath" : "/rest",
+  "tags" : [ {
+    "name" : "flightoperators"
+  }, {
+    "name" : "third-party-webservice"
+  }, {
+    "name" : "third-party-webservice-to-amq"
+  } ],
+  "schemes" : [ "http" ],
+  "paths" : {
+    "/flightoperators/" : {
+      "get" : {
+        "tags" : [ "flightoperators" ],
+        "operationId" : "rest-flightoperators",
+        "responses" : {
+          "200" : { }
+        }
+      }
+    },
+    "/third-party-webservice/" : {
+      "get" : {
+        "tags" : [ "third-party-webservice" ],
+        "operationId" : "rest-third-party-webservice",
+        "responses" : {
+          "200" : { }
+        }
+      }
+    },
+    "/third-party-webservice-to-amq/" : {
+      "get" : {
+        "tags" : [ "third-party-webservice-to-amq" ],
+        "operationId" : "rest-third-party-webservice-to-amq",
+        "responses" : {
+          "200" : { }
+        }
+      }
+    }
+  }
+}

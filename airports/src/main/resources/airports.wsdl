@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='UTF-8'?><wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://operators/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" name="OperatorsServiceService" targetNamespace="http://operators/">
+  <wsdl:types>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://operators/" elementFormDefault="unqualified" targetNamespace="http://operators/" version="1.0">
+
+  <xs:element name="operatorQuery" type="tns:operatorQuery"/>
+
+  <xs:element name="operatorQueryResponse" type="tns:operatorQueryResponse"/>
+
+  <xs:complexType name="operatorQuery">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="operatorQueryResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:operatorType"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="operatorType">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="fightOperator" type="xs:string"/>
+      <xs:element minOccurs="0" name="flightOperatorType" type="xs:string"/>
+      <xs:element minOccurs="0" name="updateDate" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="operatorQueryResponse">
+    <wsdl:part element="tns:operatorQueryResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="operatorQuery">
+    <wsdl:part element="tns:operatorQuery" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="OperatorsService">
+    <wsdl:operation name="operatorQuery">
+      <wsdl:input message="tns:operatorQuery" name="operatorQuery">
+    </wsdl:input>
+      <wsdl:output message="tns:operatorQueryResponse" name="operatorQueryResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="OperatorsServiceServiceSoapBinding" type="tns:OperatorsService">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="operatorQuery">
+      <soap:operation soapAction="http://localhost:8080/cxf/airports/operatorQuery" style="document"/>
+      <wsdl:input name="operatorQuery">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="operatorQueryResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="OperatorsServiceService">
+    <wsdl:port binding="tns:OperatorsServiceServiceSoapBinding" name="OperatorsServicePort">
+      <soap:address location="http://localhost:8280/cxf/airports"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

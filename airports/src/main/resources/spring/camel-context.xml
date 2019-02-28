@@ -7,15 +7,12 @@
     <bean class="org.apache.camel.component.http4.HttpComponent" id="fusehttp4"/>
     <camelContext id="camel" xmlns="http://camel.apache.org/schema/spring">
         <dataFormats>
-            <json id="operatortype" library="Jackson" useList="true"/>
+            <jaxb contentTypeHeader="false" contextPath="operators"
+                filterNonXmlChars="false" fragment="false" id="jaxb"
+                ignoreJAXBElement="false" mustBeJAXBElement="false"
+                prettyPrint="false" schemaSeverityLevel="0"/>
         </dataFormats>
         <route id="simple-route" streamCache="true">
-            <!--   <to id="callRestService" uri="rest-swagger:api-doc.json#rest-flightoperators?componentName=fusehttp4&amp;consumes=application/json"/> -->
-            <!--  <removeHeaders id="_removeHeaders1" pattern="CamelHttp*"/> -->
-            <!--  <convertBodyTo id="_convertBodyTo1" type="String"/> -->
-            <!--   <marshal id="_marshal1">
-                <jaxb contextPath="operators"/>
-            </marshal> -->
             <from id="_to1" uri="cxf:bean:airportEndpoint"/>
             <setBody id="route-setBody">
                 <simple>Hello World from camel-context.xml</simple>
@@ -23,10 +20,9 @@
             <to id="callRestService" uri="http4:daa-demo-application-daa-demo-project.apps.daaireland-e0bc.openshiftworkshop.com/rest/flightoperators?bridgeEndpoint=true&amp;httpMethod=GET"/>
             <log id="route-log" message=">>> ${body}"/>
             <unmarshal id="_unmarshal1">
-                <json library="Jackson"
-                    unmarshalTypeName="operators.OperatorType" useList="true"/>
+                <json library="Jackson"/>
             </unmarshal>
-            <log id="route-log2" message=">>> ${body}"/>
+            <process id="_process1" ref="returnProcessor"/>
         </route>
     </camelContext>
 </beans>

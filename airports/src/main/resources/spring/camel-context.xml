@@ -12,8 +12,43 @@
                 ignoreJAXBElement="false" mustBeJAXBElement="false"
                 prettyPrint="false" schemaSeverityLevel="0"/>
         </dataFormats>
-        <route id="simple-route" streamCache="true">
+        <route id="RoutetoCorrectSOAPOperation" streamCache="true">
             <from id="_to1" uri="cxf:bean:airportEndpoint"/>
+            <recipientList id="_recipientList1">
+                <simple>direct:${header.operationName}</simple>
+            </recipientList>
+        </route>
+        <route id="OperatorQuery" streamCache="true">
+            <from id="_to2" uri="direct:operatorQuery"/>
+            <process id="_process2" ref="operatorQueryProcessor"/>
+            <log id="test" message=">>>>>> ${body.operator} and ${body.operatorType}"/>
+            <choice id="_BuildQueryString">
+                <description>Build Query String</description>
+                <when id="filterby operator and operatorType">
+                    <simple>${body.operator} &amp;&amp; ${body.operatorType}</simple>
+                    <setHeader headerName="Exchange.HTTP_QUERY" id="_operatorandoperatortype">
+                        <simple>operator=${body.operator}&amp;operator_type=${body.operatorType}</simple>
+                    </setHeader>
+                </when>
+                <when id="filterby operator">
+                    <simple>${body.operator}</simple>
+                    <setHeader headerName="Exchange.HTTP_QUERY" id="_operator">
+                        <simple>operator=${body.operator}</simple>
+                    </setHeader>
+                </when>
+                <when id="filterby operatortype">
+                    <simple>${body.operatorType}</simple>
+                    <setHeader headerName="Exchange.HTTP_QUERY" id="_operatorType">
+                        <simple>operator_type=${body.operatorType}</simple>
+                    </setHeader>
+                </when>
+                <otherwise id="_nofilter">
+                    <description>NoFilter</description>
+                </otherwise>
+            </choice>
+            <setBody id="_setBody1">
+                <constant/>
+            </setBody>
             <to id="callRestService" uri="http4:daa-demo-application-daa-demo-project.apps.daaireland-e0bc.openshiftworkshop.com/rest/flightoperators?bridgeEndpoint=true&amp;httpMethod=GET"/>
             <log id="route-log" message=">>> ${body}"/>
             <unmarshal id="_unmarshal1">

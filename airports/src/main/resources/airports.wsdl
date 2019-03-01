@@ -7,7 +7,10 @@
   <xs:element name="operatorQueryResponse" type="tns:operatorQueryResponse"/>
 
   <xs:complexType name="operatorQuery">
-    <xs:sequence/>
+    <xs:sequence>
+    <xs:element minOccurs="0" maxOccurs="1" name="operator" type="xs:string"/>
+      <xs:element minOccurs="0" maxOccurs="1" name="operatorType" type="xs:string"/>
+    </xs:sequence>
   </xs:complexType>
 
   <xs:complexType name="operatorQueryResponse">

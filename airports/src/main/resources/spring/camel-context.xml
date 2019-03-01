@@ -2,7 +2,7 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
     xmlns:cxf="http://camel.apache.org/schema/cxf"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="       http://www.springframework.org/schema/beans           http://www.springframework.org/schema/beans/spring-beans.xsd       http://camel.apache.org/schema/cxf           http://camel.apache.org/schema/cxf/camel-cxf.xsd       http://camel.apache.org/schema/spring           http://camel.apache.org/schema/spring/camel-spring.xsd">
-    <cxf:cxfEndpoint address="http://0.0.0.0:8280/cxf/airports"
+    <cxf:cxfEndpoint address="http://0.0.0.0:8080/cxf/airports"
         id="airportEndpoint" serviceClass="operators.OperatorsService"/>
     <bean class="org.apache.camel.component.http4.HttpComponent" id="fusehttp4"/>
     <camelContext id="camel" xmlns="http://camel.apache.org/schema/spring">
@@ -14,9 +14,6 @@
         </dataFormats>
         <route id="simple-route" streamCache="true">
             <from id="_to1" uri="cxf:bean:airportEndpoint"/>
-            <setBody id="route-setBody">
-                <simple>Hello World from camel-context.xml</simple>
-            </setBody>
             <to id="callRestService" uri="http4:daa-demo-application-daa-demo-project.apps.daaireland-e0bc.openshiftworkshop.com/rest/flightoperators?bridgeEndpoint=true&amp;httpMethod=GET"/>
             <log id="route-log" message=">>> ${body}"/>
             <unmarshal id="_unmarshal1">

@@ -310,9 +310,9 @@
         "thresholdMarkers": true
       },
       "gridPos": {
-        "h": 2,
-        "w": 2,
-        "x": 22,
+        "h": 4,
+        "w": 3,
+        "x": 21,
         "y": 0
       },
       "id": 10,
@@ -722,6 +722,7 @@
         "y": 12
       },
       "id": 20,
+      "interval": "",
       "legend": {
         "avg": false,
         "current": false,
@@ -745,7 +746,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "jvm_memory_pool_bytes_committed",
+          "expr": "jvm_memory_bytes_used{job=\"flightoperators\",namespace=\"daa-demo-project\", service=\"flightoperators\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "",
@@ -801,7 +802,7 @@
     "list": []
   },
   "time": {
-    "from": "now-1h",
+    "from": "now-6h",
     "to": "now"
   },
   "timepicker": {
@@ -832,5 +833,5 @@
   "timezone": "",
   "title": "Fuse Monitoring",
   "uid": "Y76M2SCiz",
-  "version": 16
+  "version": 19
 }
